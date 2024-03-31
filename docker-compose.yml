@@ -1,0 +1,11 @@
+services:
+  backend:
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/srv/shortlink
+    command: gunicorn api.main:app -w 1 -k uvicorn.workers.UvicornWorker -b :8080 -t 180
+    env_file:
+      - .env
+    tty: true
