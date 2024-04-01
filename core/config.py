@@ -15,6 +15,7 @@ class Settings(BaseSettings):
 
     short_url_len: int = Field(8, alias="SHORT_URL_LEN")
 
+    db_uri: PostgresDsn = Field("postgresql://postgres:@db/shortlink", alias="DB_URI")
 
 
 settings = Settings()
