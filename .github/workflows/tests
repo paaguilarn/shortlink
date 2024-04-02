@@ -1,0 +1,22 @@
+name: Tests
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Generate coverage report
+      run: make test
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        directory: ./coverage/reports/
+        env_vars: OS,PYTHON
+        fail_ci_if_error: true
+        files: ./coverage.xml,!./cache
+        flags: unittests
+        name: codecov-umbrella
+        token: ${{ secrets.CODECOV_TOKEN }}
+        verbose: true
