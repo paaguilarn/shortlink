@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from core.config import settings
+from api.endpoints import router
 
 
 def get_app() -> FastAPI:
@@ -11,5 +12,7 @@ def get_app() -> FastAPI:
         docs_url=settings.docs_url,
         redoc_url=settings.redoc_url,
     )
+
+    server.include_router(router, tags=["URL"])
 
     return server
