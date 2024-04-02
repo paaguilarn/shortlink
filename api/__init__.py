@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 
-from core.config import settings
 from api.endpoints import router
+from core.config import settings
+from events.usage_tracking_listener import setup_usage_tracking_handlers
 
 
 def get_app() -> FastAPI:
@@ -14,5 +15,7 @@ def get_app() -> FastAPI:
     )
 
     server.include_router(router, tags=["URL"])
+
+    setup_usage_tracking_handlers()
 
     return server
