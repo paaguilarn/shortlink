@@ -15,12 +15,6 @@ def create(obj_in: schemas.URLCreate, db: Session) -> models.URL:
     return db_obj
 
 
-def get_by_id(id: int, db: Session) -> models.URL:
-    stmt = select(models.URL).where(models.URL.id == id)
-
-    return db.scalars(stmt).first()
-
-
 def get_by_short_url(short_url: str, db: Session) -> models.URL:
     stmt = select(models.URL).where(models.URL.short_url == short_url)
 
