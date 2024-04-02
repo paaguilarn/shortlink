@@ -23,5 +23,9 @@ start:
 
 test:
 	## Run tests
-	@docker compose --file docker-compose.yml run --rm backend bash -c "pytest --cov=./ --cov-report=xml"
+	@docker compose --file docker-compose.yml run --rm backend bash -c "pytest --cov=./ --cov-report=xml:/shared/coverage.xml"
 
+
+lint:
+	## Lint code
+	@docker-compose --file docker-compose.yml run --rm backend bash -c "flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics && flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics"
