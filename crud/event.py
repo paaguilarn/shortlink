@@ -5,7 +5,7 @@ import models
 import schemas
 
 
-def create(obj_in: schemas.EventCreate, db: Session) -> models.URL:
+def create(obj_in: schemas.EventCreate, db: Session) -> models.Event:
     db_obj = models.Event(**jsonable_encoder(obj_in, exclude_none=True))
     db.add(db_obj)
     db.commit()
