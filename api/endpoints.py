@@ -43,6 +43,13 @@ async def create_url(
 def redirect_original_url(
     short_url: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)
 ):
+    try:
+        short_url = clean_encoded_string(short_url)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL"
+        )
+
     db_obj = crud.url.get_by_short_url(short_url=clean_encoded_string(short_url), db=db)
     if db_obj is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid URL")

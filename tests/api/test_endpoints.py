@@ -47,7 +47,7 @@ def test_redirect_original_url_returns_original_url(
     client: TestClient, db: Session, url_sample: models.URL
 ):
     response = client.get(
-        f"{settings.api_v1_route}/{url_sample.short_url}", allow_redirects=False
+        f"{settings.api_v1_route}/{url_sample.short_url}", follow_redirects=False
     )
 
     assert response.status_code == status.HTTP_307_TEMPORARY_REDIRECT
@@ -56,3 +56,11 @@ def test_redirect_original_url_returns_original_url(
     headers = response.headers
 
     assert headers["location"] == url_sample.original_url
+
+
+def test_redirect_original_url_returns_400_on_invalid_url(
+    client: TestClient, db: Session
+):
+    response = client.get(f"{settings.api_v1_route}/invalid*")
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
