@@ -14,7 +14,7 @@ def get_app() -> FastAPI:
         redoc_url=settings.redoc_url,
     )
 
-    server.include_router(router, tags=["URL"])
+    server.include_router(router, prefix=settings.api_v1_route, tags=["URL"])
 
     setup_usage_tracking_handlers()
 
