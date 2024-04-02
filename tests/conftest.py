@@ -14,8 +14,8 @@ import models
 def db() -> Generator[Session, None, None]:
     with Session(engine) as session:
         yield session
-        delete(models.Event)
-        delete(models.URL)
+        session.execute(delete(models.Event))
+        session.execute(delete(models.URL))
         session.commit()
 
 
@@ -23,3 +23,13 @@ def db() -> Generator[Session, None, None]:
 def client() -> Generator[TestClient, None, None]:
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture(scope="session")
+def url_sample(db: Session):
+    url = models.URL(original_url="https://another-url.com", short_url="XYZ")
+    db.add(url)
+    db.commit()
+    db.refresh(url)
+
+    return url
