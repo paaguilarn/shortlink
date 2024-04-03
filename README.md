@@ -51,6 +51,16 @@ with the endpoints latency nor make the endpoints fail. Considering the possibil
 a single event might trigger several processes, in addition to only storing the event log,
 we have implemented an additional layer consisting of the observer pattern.
 
+In order to track usage, a query as simple as 
+```postgresql
+select action, count(id) as usage
+from event
+where "timestamp" between :timestamp_start and :timestamp_end
+group by action;
+```
+is sufficient, where `timestamp_start` and `timestamp_end` limit the time window over 
+which we want measure.
+
 #### Storage
 We store our data in a SQL database. We do not consider a KV store because we are
 considering an scenario in which the number of encoded URLs grows considerably. 
