@@ -14,7 +14,11 @@ from src.utils import clean_encoded_string
 router = APIRouter()
 
 
-@router.post("/urls", response_model=schemas.URL, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/urls",
+    response_model=schemas.URL,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_url(
     payload: schemas.URLCreateServer,
     background_tasks: BackgroundTasks,
@@ -39,7 +43,14 @@ async def create_url(
     return db_obj
 
 
-@router.get("/{short_url}", status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+@router.get(
+    "/{short_url}",
+    status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+    responses={
+        status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPError},
+        status.HTTP_404_NOT_FOUND: {"model": schemas.HTTPError},
+    },
+)
 def redirect_original_url(
     short_url: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)
 ):
