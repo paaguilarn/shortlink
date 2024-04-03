@@ -1,8 +1,7 @@
-from datetime import datetime
-
 from sqlalchemy import DateTime, Column, Integer, String, Text
 
 from core.db import Base
+from schemas.types import naive_utcnow
 
 
 class URL(Base):
@@ -11,4 +10,4 @@ class URL(Base):
     id = Column(Integer, primary_key=True)
     original_url = Column(String)
     short_url = Column(String(8))
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=naive_utcnow)

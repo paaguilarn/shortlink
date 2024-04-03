@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
+from schemas.types import naive_utcnow
 
 
 class EventBase(BaseModel):
@@ -12,7 +13,7 @@ class EventBase(BaseModel):
 class EventCreate(EventBase):
     url_id: int
     action: str
-    timestamp: Optional[datetime] = Field(default_factory=datetime.utcnow)
+    timestamp: Optional[datetime] = Field(default_factory=naive_utcnow)
 
 
 class EventInDBBase(EventBase):
