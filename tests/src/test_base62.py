@@ -17,3 +17,11 @@ def test_encode(num: int, encoded: str):
 )
 def test_decode(num, decoded):
     assert decode(num) == decoded
+
+
+def test_benchmark_encode(benchmark):
+    benchmark(encode, num=1234567890)
+
+
+def test_benchmark_decode(benchmark):
+    benchmark(decode, data="1ly7vk")
