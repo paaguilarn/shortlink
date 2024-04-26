@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Optional
+import uuid
 
 from pydantic import BaseModel, Field
 from schemas.types import naive_utcnow
@@ -17,7 +18,7 @@ class EventCreate(EventBase):
 
 
 class EventInDBBase(EventBase):
-    id: int
+    uuid: uuid.UUID
     url_id: int
     action: int
     timestamp: datetime
