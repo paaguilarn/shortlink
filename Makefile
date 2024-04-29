@@ -23,7 +23,7 @@ start:
 
 test:
 	## Run tests
-	@docker compose --file docker-compose.yml run --rm backend bash -c "pytest --cov=./ --cov-report=xml:/shared/coverage.xml"
+	@docker compose --file docker-compose.yml run --rm backend bash -c "pytest --cov=./ --cov-report=xml:/shared/coverage.xml --benchmark-skip --cov-config=.coveragerc"
 
 
 lint:
